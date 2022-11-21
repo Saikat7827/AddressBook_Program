@@ -1,49 +1,75 @@
 package com.bridgelabz;
 
-import java.util.Scanner;
-
 public class Contacts {
-	 String fName, lName, address, city, state, email;
-	  int zip;
-	  long phNum;
+	
+		String firstName;
+		String lastName;
+		String city;
+		String state;
+		int zip;
+		String phNo;
+		String email;
 
-	  Scanner sc = new Scanner(System.in);
+		
+		public String getFirstName() {
+			return firstName;
+		}
 
-	  void getInputs() {
-	    System.out.print("Enter your first name: ");
-	    fName = sc.nextLine();
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
 
-	    System.out.print("Enter your last name: ");
-	    lName = sc.nextLine();
+		public String getLastName() {
+			return lastName;
+		}
 
-	    System.out.print("Enter your address: ");
-	    address = sc.nextLine();
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
 
-	    System.out.print("Enter your city: ");
-	    city = sc.nextLine();
+		public String getCity() {
+			return city;
+		}
 
-	    System.out.print("Enter your state: ");
-	    state = sc.nextLine();
+		public void setCity(String city) {
+			this.city = city;
+		}
 
-	    System.out.print("Enter your email: ");
-	    email = sc.nextLine();
+		public String getState() {
+			return state;
+		}
 
-	    System.out.print("Enter your area zip code: ");
-	    zip = sc.nextInt();
+		public void setState(String state) {
+			this.state = state;
+		}
 
-	    System.out.print("Enter your phone number: ");
-	    phNum = sc.nextLong();
+		public int getZip() {
+			return zip;
+		}
 
-	  }
+		public void setZip(int zip) {
+			this.zip = zip;
+		}
 
-	  Contacts[] addContact(Contacts[] contacts, Contacts c) {
-	    for (int i = 0; i < contacts.length; i++) {
-	      if (contacts[i] == null) {
-	        contacts[i] = c;
-	        break;
-	      }
-	    }
-	    System.out.println("a new contact has been added");
-	    return contacts;
-	  }
+		public String getPhNo() {
+			return phNo;
+		}
+
+		public void setPhNo(String phNo) {
+			this.phNo = phNo;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		@Override
+		public String toString() {
+			return "Contacts [firstName=" + firstName + ", lastName=" + lastName + ", city=" + city + ", state=" + state
+					+ ", zip=" + zip + ", phNo=" + phNo + ", email=" + email + "]";
+		}
 }
