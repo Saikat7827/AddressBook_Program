@@ -1,40 +1,108 @@
 package com.bridgelabz;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBook {
-	 public static void main(String[] args) {
-		    System.out.println("--Welcome to Address Book Program--");
+	Scanner sc = new Scanner(System.in);
+	// creation of arraylist
+	ArrayList<Contacts> personDetails = new ArrayList<>();
 
-		    Contacts[] contacts = new Contacts[25];
-		    String choice = "add";
-		    Scanner sc = new Scanner(System.in);
+	
+	public void newContact() {
+		Contacts add = new Contacts();
+		System.out.println("Enter your First Name");
+		add.firstName = sc.nextLine();
+		System.out.println("Enter your Last Name");
+		add.lastName = sc.nextLine();
+		System.out.println("Enter your City");
+		add.city = sc.nextLine();
+		System.out.println("Enter your state");
+		add.state = sc.nextLine();
+		System.out.println("Enter your Zip");
+		add.zip = sc.nextInt();
+		System.out.println("Enter your Phone Number");
+		add.phNo = sc.next();
+		System.out.println("Enter your email ID");
+		add.email = sc.next();
+		System.out.println("Added Successfully");
 
-		    while (!choice.equals("quit")) {
-		      System.out.print("\n1. add \n2. quit \nEnter your choice: ");
-		      choice = sc.next();
+		// Add the above list to personDetails array list
+		personDetails.add(add);
 
-		      switch (choice) {
-		        case "add":
-		        case "1":
-		          Contacts c = new Contacts();
-		          c.getInputs();
-		          System.out.println("Here's whats been added: " + c.fName + " " + c.lName + " " + c.address + " " + c.city + " "
-		            + c.state + " " + c.email + " " + c.zip + " " + c.phNum);
-		          contacts = c.addContact(contacts, c);
-		          break;
+		System.out.println(add);
+	}
 
-		        case "quit":
-		        case "2":
-		          choice = "quit";
-		          break;
+	/*
+	 * This is the method to edit existing contact person using their name
+	 */
+	public void editPerson() {
+		Scanner sc = new Scanner(System.in);
 
-		        default:
-		          System.out.println("that didnt match any choice, try again");
-		          break;
+		System.out.println("Enter name to Edit");
+		String name = sc.next();
 
-		      }
-		    }
-		    
-		  }
+		for (int i = 0; i < personDetails.size(); i++) {
+			Contacts p = (Contacts) personDetails.get(i);
+
+			if (name.equals(p.getFirstName())) {
+				System.out.println(p);
+
+				System.out.print(
+						"Enter what to update(1.first name/ 2.last name/ 3.city/ 4.state/ 5.phone/ 6.zip/ 7.email): ");
+				sc.nextLine();
+				Integer choice = sc.nextInt();
+				switch (choice) {
+				case 1:
+					System.out.println("Enter your first name to update:");
+					p.firstName = sc.next();
+					break;
+				case 2:
+					System.out.println("Enter your last name to update:");
+					p.lastName = sc.next();
+					break;
+				case 3:
+					System.out.println("Enter your city name to update:");
+					p.city = sc.next();
+					break;
+				case 4:
+					System.out.println("Enter your state name to update:");
+					p.state = sc.next();
+					break;
+				case 5:
+					System.out.println("Enter Your phone no to update:");
+					p.phNo = sc.next();
+					break;
+				case 6:
+					System.out.println("Enter Your zip to update:");
+					p.zip = sc.nextInt();
+					break;
+				case 7:
+					System.out.println("Enter Your email to update:");
+					p.email = sc.next();
+					break;
+				}
+				personDetails.set(i, p);
+				System.out.println(p);
+			}
+		}
+		sc.close();
+	}
+
+	public static void main(String[] args) {
+		System.out.println("Welcome to Address Book Program ");
+		Scanner sc = new Scanner(System.in);
+
+		AddressBook addPerson = new AddressBook();
+		// to add a new Contact
+		System.out.println("Enter Number of persons you want to add : ");
+		int person_count = sc.nextInt();
+		for (int i = 0; i < person_count; i++) {
+			addPerson.newContact();
+		}
+		// to edit existing contact
+		addPerson.editPerson();
+
+		sc.close();
+	}
 }
