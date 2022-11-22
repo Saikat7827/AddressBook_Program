@@ -2,13 +2,13 @@ package com.bridgelabz;
 
 public class Contacts {
 	
-		String firstName;
-		String lastName;
-		String city;
-		String state;
-		int zip;
-		String phNo;
-		String email;
+private	String firstName;
+private	String lastName;
+private	String city;
+private	String state;
+private	int zip;
+private	String phNo;
+private	String email;
 
 		
 		public String getFirstName() {

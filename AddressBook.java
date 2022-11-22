@@ -5,37 +5,42 @@ import java.util.Scanner;
 
 public class AddressBook {
 	Scanner sc = new Scanner(System.in);
-	// creation of arraylist
+	
 	ArrayList<Contacts> personDetails = new ArrayList<>();
 
 	
 	public void newContact() {
-		Contacts add = new Contacts();
+		Contacts contact = new Contacts();
 		System.out.println("Enter your First Name");
-		add.firstName = sc.nextLine();
+		contact.setFirstName(sc.next());
+		
 		System.out.println("Enter your Last Name");
-		add.lastName = sc.nextLine();
+		contact.setLastName(sc.next());
+		
 		System.out.println("Enter your City");
-		add.city = sc.nextLine();
+		contact.setCity(sc.next());
+		
 		System.out.println("Enter your state");
-		add.state = sc.nextLine();
+		contact.setState(sc.next());
+		
 		System.out.println("Enter your Zip");
-		add.zip = sc.nextInt();
+		contact.setZip(sc.nextInt());
+		
 		System.out.println("Enter your Phone Number");
-		add.phNo = sc.next();
+		contact.setPhNo(sc.next());
+		
 		System.out.println("Enter your email ID");
-		add.email = sc.next();
+		contact.setEmail(sc.next());
+		
 		System.out.println("Added Successfully");
 
-		// Add the above list to personDetails array list
-		personDetails.add(add);
+		
+		personDetails.add(contact);
 
-		System.out.println(add);
+		System.out.println(contact);
 	}
 
-	/*
-	 * This is the method to edit existing contact person using their name
-	 */
+	
 	public void editPerson() {
 		Scanner sc = new Scanner(System.in);
 
@@ -55,31 +60,31 @@ public class AddressBook {
 				switch (choice) {
 				case 1:
 					System.out.println("Enter your first name to update:");
-					p.firstName = sc.next();
+					p.setFirstName(sc.next());
 					break;
 				case 2:
 					System.out.println("Enter your last name to update:");
-					p.lastName = sc.next();
+					p.setLastName( sc.next());
 					break;
 				case 3:
 					System.out.println("Enter your city name to update:");
-					p.city = sc.next();
+					p.setCity(sc.next());
 					break;
 				case 4:
 					System.out.println("Enter your state name to update:");
-					p.state = sc.next();
+					p.setState(sc.next());
 					break;
 				case 5:
 					System.out.println("Enter Your phone no to update:");
-					p.phNo = sc.next();
+					p.setPhNo(sc.next());
 					break;
 				case 6:
 					System.out.println("Enter Your zip to update:");
-					p.zip = sc.nextInt();
+					p.setZip(sc.nextInt());
 					break;
 				case 7:
 					System.out.println("Enter Your email to update:");
-					p.email = sc.next();
+					p.setEmail(sc.next());
 					break;
 				}
 				personDetails.set(i, p);
@@ -100,7 +105,7 @@ public class AddressBook {
 		for (int i = 0; i < person_count; i++) {
 			addPerson.newContact();
 		}
-		// to edit existing contact
+		
 		addPerson.editPerson();
 
 		sc.close();
