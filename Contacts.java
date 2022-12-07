@@ -1,75 +1,121 @@
 package com.bridgelabz;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Contacts {
-private	String firstName;
-private	String lastName;
-private	String city;
-private	String state;
-private	int zip;
-private	String phNo;
-private	String email;
+	 String fName, lName, address, city, state, email;
+	  int zip;
+	  long phNum;
 
-	// generating getter and setter
-	
-	public String getFirstName() {
-		return firstName;
-	}
+	  Scanner sc = new Scanner(System.in);
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+	  void getInputs() {
+	    System.out.print("Enter your first name: ");
+	    fName = sc.nextLine();
 
-	public String getLastName() {
-		return lastName;
-	}
+	    System.out.print("Enter your last name: ");
+	    lName = sc.nextLine();
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+	    System.out.print("Enter your address: ");
+	    address = sc.nextLine();
 
-	public String getCity() {
-		return city;
-	}
+	    System.out.print("Enter your city: ");
+	    city = sc.nextLine();
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+	    System.out.print("Enter your state: ");
+	    state = sc.nextLine();
 
-	public String getState() {
-		return state;
-	}
+	    System.out.print("Enter your email: ");
+	    email = sc.nextLine();
 
-	public void setState(String state) {
-		this.state = state;
-	}
+	    System.out.print("Enter your area zip code: ");
+	    zip = sc.nextInt();
 
-	public int getZip() {
-		return zip;
-	}
+	    System.out.print("Enter your phone number: ");
+	    phNum = sc.nextLong();
 
-	public void setZip(int zip) {
-		this.zip = zip;
-	}
+	  }
 
-	public String getPhNo() {
-		return phNo;
-	}
+	  ArrayList<Contacts> addContact(ArrayList<Contacts> contacts, Contacts c) {
+	    contacts.add(c);
+	    System.out.println("a new contact has been added");
+	    return contacts;
+	  }
 
-	public void setPhNo(String phNo) {
-		this.phNo = phNo;
-	}
+	  ArrayList<Contacts> editContact(ArrayList<Contacts> contacts, short index) {
 
-	public String getEmail() {
-		return email;
-	}
+	    Contacts cc = new Contacts();
+	    cc.getInputs();
+	    contacts.set(index, cc);
+	    System.out.println("contact has been updated.");
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	    return contacts;
+	  }
 
-	@Override
-	public String toString() {
-		return "Contacts [firstName=" + firstName + ", lastName=" + lastName + ", city=" + city + ", state=" + state
-				+ ", zip=" + zip + ", phNo=" + phNo + ", email=" + email + "]";
-	}
+	  short getIndex(ArrayList<Contacts> contacts, String name) {
+	    short found = -1;
+	    for (short i = 0; i < contacts.size(); i++) {
+	      if (contacts.get(i).fName.toLowerCase().equals(name.toLowerCase())) {
+	        found = i;
+	        break;
+	      }
+	    }
+
+	    return found;
+	  }
+
+	  ArrayList<Contacts> deleteContact(ArrayList<Contacts> contacts, short index) {
+	    contacts.remove(index);
+	    return contacts;
+
+	  }
+
+	  ArrayList<Contacts> showEditDelete(ArrayList<Contacts> contacts, String str) {
+	    if (contacts.size() == 0) {
+	      System.out.print("You have no contacts yet. 'add' one before you " + str + ".\n");
+	      return contacts;
+
+	    } else {
+	      System.out.print("Your contacts are: ");
+	      for (Contacts c : contacts) {
+	        if (c != null) System.out.print(c.fName + ", ");
+	        else break;
+	      }
+	      System.out.println();
+
+	      System.out.print("\nEnter a name to " + str + ". ");
+	      String name = sc.nextLine();
+
+	      short index = getIndex(contacts, name);
+
+	      if (index == -1) {
+	        System.out.println("we couldnt find " + name + ". try again. ");
+	      } else {
+	        switch (str) {
+	          case "edit":
+	            System.out.println("\n* " + name + " is being edited *");
+	            contacts = editContact(contacts, index);
+	            break;
+	          case "delete":
+	            contacts = deleteContact(contacts, index);
+	            System.out.println("contact " + name + " has been deleted.");
+	            break;
+	          case "show":
+	            showDetails(contacts, index);
+	            break;
+	        }
+	      }
+
+	      return contacts;
+	    }
+
+	  }
+
+	  void showDetails(ArrayList<Contacts> c, short i) {
+	    System.out.println("Contact Details ");
+	    System.out.print("Name: " + c.get(i).fName + " " + c.get(i).lName + "\nAddress: " + c.get(i).address + "\nCity: "
+	      + c.get(i).city + "\t\tState: " + c.get(i).state + "\t\tZip: " + c.get(i).zip + "\nEmail: " + c.get(i).email
+	      + "\t\tPhone number: " + c.get(i).phNum + "\n");
+	  }
 }

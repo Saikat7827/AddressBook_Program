@@ -1,119 +1,65 @@
 package com.bridgelabz;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AddressBook {
-	static Scanner sc = new Scanner(System.in);
-	ArrayList<Contacts> personDetails = new ArrayList<>();
+	 public static void main(String[] args) {
+		    System.out.println("--Welcome to Address Book Program--");
 
-	/*
-	 * This is the method to add a new Contact to Address Book
-	 */
-	public void newContact() {
-		Contacts contact = new Contacts();
-		System.out.println("Enter your First Name");
-		contact.setFirstName(sc.nextLine());
-		System.out.println("Enter your Last Name");
-		contact.setLastName(sc.nextLine());
-		System.out.println("Enter your City");
-		contact.setCity(sc.nextLine());
-		System.out.println("Enter your state");
-		contact.setState(sc.nextLine());
-		System.out.println("Enter your Zip");
-		contact.setZip(sc.nextInt());
-		System.out.println("Enter your Phone Number");
-		contact.setPhNo(sc.next());
-		System.out.println("Enter your email ID");
-		contact.setEmail(sc.next());
-		System.out.println("Added Successfully");
+		    ArrayList<Contacts> contacts = new ArrayList<>();
+		    String choice = "add";
+		    Scanner sc = new Scanner(System.in);
 
-		// Add the above list to personDetails array list
-		personDetails.add(contact);
-		System.out.println(contact);
-	}
+		    while (!choice.equals("quit")) {
+		      System.out.print("\n1. add \n2. edit \n3. delete \n4. show \n5. quit \nEnter your choice: ");
+		      choice = sc.next().toLowerCase();
 
-	/*
-	 * This is the method to edit existing contact person using their name
-	 */
-	public void editPerson() {
-		System.out.println("Enter name to Edit");
-		String name = sc.next();
+		      switch (choice) {
+		        case "add":
+		        case "1":
+		          Contacts c = new Contacts();
+		          try {
+		            c.getInputs();
+		            System.out.println("Here's whats been added: " + c.fName + " " + c.lName + " " + c.address + " " + c.city + " "
+		              + c.state + " " + c.email + " " + c.zip + " " + c.phNum);
+		            contacts = c.addContact(contacts, c);
+		          } catch (InputMismatchException e) {
+		            System.out.println("Enter a numeric value for zip code and phone number next time.");
+		          }
 
-		for (int i = 0; i < personDetails.size(); i++) {
-			Contacts p = (Contacts) personDetails.get(i);
+		          break;
 
-			if (name.equals(p.getFirstName())) {
-				System.out.println(p);
+		        case "edit":
+		        case "2":
+		          c = new Contacts();
+		          contacts = c.showEditDelete(contacts, "edit");
+		          break;
 
-				System.out.print(
-						"Enter what to update(1.first name/ 2.last name/ 3.city/ 4.state/ 5.phone/ 6.zip/ 7.email): ");
-				sc.nextLine();
-				Integer choice = sc.nextInt();
-				switch (choice) {
-				case 1:
-					System.out.println("Enter your first name to update:");
-					p.setFirstName(sc.next());
-					break;
-				case 2:
-					System.out.println("Enter your last name to update:");
-					p.setLastName(sc.next());
-					break;
-				case 3:
-					System.out.println("Enter your city name to update:");
-					p.setCity(sc.next());
-					break;
-				case 4:
-					System.out.println("Enter your state name to update:");
-					p.setState(sc.next());
-					break;
-				case 5:
-					System.out.println("Enter Your phone no to update:");
-					p.setPhNo(sc.next());
-					break;
-				case 6:
-					System.out.println("Enter Your zip to update:");
-					p.setZip(sc.nextInt());
-					break;
-				case 7:
-					System.out.println("Enter Your email to update:");
-					p.setEmail(sc.next());
-					break;
-				}
-				
-				personDetails.set(i, p);
-				System.out.println(p);
-			}
-		}
-	}
+		        case "delete":
+		        case "3":
+		          c = new Contacts();
+		          contacts = c.showEditDelete(contacts, "delete");
+		          break;
 
-	/*
-	 * This is the method to delete existing contact person using their name
-	 */
-	public void deletePerson() {
+		        case "show":
+		        case "4":
+		          c = new Contacts();
+		          contacts = c.showEditDelete(contacts, "show");
+		          break;
 
-		System.out.println("Enter name to Delete");
-		String name = sc.next();
+		        case "quit":
+		        case "5":
+		          choice = "quit";
+		          break;
 
-		for (int i = 0; i < personDetails.size(); i++) {
-			Contacts p = (Contacts) personDetails.get(i);
-			if (name.equals(p.getFirstName())) {
-				System.out.println(p);
-				personDetails.remove(i);
-				System.out.println(personDetails.isEmpty());
-			}
-		}
-	}
+		        default:
+		          System.out.println("that didnt match any choice, try again");
+		          break;
+		      }
+		    }
 
-	public static void main(String[] args) {
-		System.out.println("Welcome to Address Book Program ");
-
-		AddressBook addPerson = new AddressBook();
-		
-		addPerson.newContact();
-		
-		addPerson.editPerson();
-		
-		addPerson.deletePerson();
-	}
+		    sc.close();
+		  }
 }
