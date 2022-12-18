@@ -16,52 +16,67 @@ public class AddressBook {
 	    contacts = a.contacts;
 
 	    while (!choice.equals("quit")) {
-	      System.out.print("\n" + a.name + " Menu." + "\n1. add \n2. edit \n3. delete \n4. show \n5. quit \nEnter your choice: ");
+	      System.out
+	      .print("\n" + a.name + " Menu. \n1. add \n2. edit \n3. delete \n4. show \n5. quit \nEnter your choice: ");
 	      choice = SC.nextLine().trim().toLowerCase();
 
 	      switch (choice) {
-	        case "add":
-	        case "1":
-	          Contacts c = new Contacts();
-	          try {
-	            c.getInputs();
-	            System.out.println("Here's whats been added: " + c.fName + " " + c.lName + " " + c.address + " " + c.city + " "
-	              + c.state + " " + c.email + " " + c.zip + " " + c.phNum);
-	            contacts = c.addContact(contacts, c);
-	          } catch (InputMismatchException e) {
-	            System.out.println("Enter a numeric value for zip code and phone number next time.");
-	          }
-	          break;
+	      case "add":
+	      case "1":
+	        Contacts c = new Contacts();
+	        addContact(c);
+	        break;
 
-	        case "edit":
-	        case "2":
-	          c = new Contacts();
-	          contacts = c.showEditDelete(contacts, "edit");
-	          break;
+	      case "edit":
+	      case "2":
+	        c = new Contacts();
+	        contacts = c.showEditDelete(contacts, "edit");
+	        break;
 
-	        case "delete":
-	        case "3":
-	          c = new Contacts();
-	          contacts = c.showEditDelete(contacts, "delete");
-	          break;
+	      case "delete":
+	      case "3":
+	        c = new Contacts();
+	        contacts = c.showEditDelete(contacts, "delete");
+	        break;
 
-	        case "show":
-	        case "4":
-	          c = new Contacts();
-	          contacts = c.showEditDelete(contacts, "show");
-	          break;
+	      case "show":
+	      case "4":
+	        c = new Contacts();
+	        contacts = c.showEditDelete(contacts, "show");
+	        break;
 
-	        case "quit":
-	        case "5":
-	          choice = "quit";
-	          break;
+	      case "quit":
+	      case "5":
+	        choice = "quit";
+	        break;
 
-	        default:
-	          System.out.println("that didnt match any choice, try again");
-	          break;
+	      default:
+	        System.out.println("that didnt match any choice, try again");
+	        break;
 	      }
 	    }
 
+	  }
+
+	  public void addContact(Contacts c) {
+
+	    System.out.print("Enter your first name: ");
+	    String fName = SC.nextLine();
+	    c.fName = fName;
+
+	    if (!isUnique(c)) {
+	      System.out.println("that contact already exists. enter a different name.");
+	      return;
+	    }
+
+	    try {
+	      c.getInputs(fName);
+	      System.out.println("Here's whats been added: " + c.fName + " " + c.lName + " " + c.address + " " + c.city + " "
+	        + c.state + " " + c.email + " " + c.zip + " " + c.phNum);
+	      contacts = c.addContact(contacts, c);
+	    } catch (InputMismatchException e) {
+	      System.out.println("Enter a numeric value for zip code and phone number next time.");
+	    }
 	  }
 
 	  public HashMap<String, AddressBook> viewEditDelete(HashMap<String, AddressBook> addressBookList, String s) {
@@ -72,9 +87,8 @@ public class AddressBook {
 	    }
 
 	    System.out.print("you have the following lists in AdressBook: ");
-	    for (String key : addressBookList.keySet()) {
-	      System.out.print(key + ", ");
-	    }
+
+	    for(String key : addressBookList.keySet()) { System.out.print(key + ", "); }
 	    System.out.print("\nEnter which one to " + s + " ");
 	    String name = SC.nextLine();
 
@@ -92,7 +106,7 @@ public class AddressBook {
 	          System.out.print(addressBookList.get(name) + "\n");
 	        }
 
-	        System.out.print("do you want to edit " + name + "(y/n) ");
+	        System.out.print("do you want to edit " + name + "(y/n): ");
 	        String ch = SC.nextLine().trim().toLowerCase();
 	        if (ch.contains("y")) menu(addressBookList.get(name));
 	        break;
@@ -106,14 +120,18 @@ public class AddressBook {
 	        System.out.println(name + " has been deleted.");
 	        break;
 	    }
-	     
+
 	    return addressBookList;
 	  }
 
 	  @Override
 	  public String toString() {
 	    String contactStr = "";
-	    for (Contacts c : contacts) contactStr += c.fName + ", ";
+	    for(Contacts c : contacts) contactStr += c.fName + ", ";
 	    return contactStr;
+	  }
+
+	  boolean isUnique(Contacts c) {
+	    return !contacts.stream().anyMatch(con -> con.equals(c));
 	  }
 }
