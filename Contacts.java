@@ -129,5 +129,5 @@ public class Contacts {
 	  public boolean equals(Object c) {
 	    Contacts con = (Contacts) c;
 	    return this.fName.equalsIgnoreCase(con.fName);
-	  }	
+	  }
 }
