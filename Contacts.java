@@ -10,9 +10,8 @@ public class Contacts {
 
 	  Scanner sc = new Scanner(System.in);
 
-	  void getInputs() {
-	    System.out.print("Enter your first name: ");
-	    fName = sc.nextLine();
+	  void getInputs(String fName) {
+	    this.fName = fName;
 
 	    System.out.print("Enter your last name: ");
 	    lName = sc.nextLine();
@@ -43,10 +42,9 @@ public class Contacts {
 	    return contacts;
 	  }
 
-	  ArrayList<Contacts> editContact(ArrayList<Contacts> contacts, short index) {
-
+	  ArrayList<Contacts> editContact(ArrayList<Contacts> contacts, String name, short index) {
 	    Contacts cc = new Contacts();
-	    cc.getInputs();
+	    cc.getInputs(name);
 	    contacts.set(index, cc);
 	    System.out.println("contact has been updated.");
 
@@ -55,7 +53,9 @@ public class Contacts {
 
 	  short getIndex(ArrayList<Contacts> contacts, String name) {
 	    short found = -1;
-	    for (short i = 0; i < contacts.size(); i++) {
+
+	    for(short i = 0; i < contacts.size(); i++) {
+
 	      if (contacts.get(i).fName.toLowerCase().equals(name.toLowerCase())) {
 	        found = i;
 	        break;
@@ -72,19 +72,21 @@ public class Contacts {
 	  }
 
 	  ArrayList<Contacts> showEditDelete(ArrayList<Contacts> contacts, String str) {
+
 	    if (contacts.size() == 0) {
 	      System.out.print("You have no contacts yet. 'add' one before you " + str + ".\n");
 	      return contacts;
 
 	    } else {
 	      System.out.print("Your contacts are: ");
-	      for (Contacts c : contacts) {
+
+	      for(Contacts c : contacts) {
 	        if (c != null) System.out.print(c.fName + ", ");
 	        else break;
 	      }
 	      System.out.println();
 
-	      System.out.print("\nEnter a name to " + str + ". ");
+	      System.out.print("\nEnter a name to " + str + ": ");
 	      String name = sc.nextLine();
 
 	      short index = getIndex(contacts, name);
@@ -92,15 +94,18 @@ public class Contacts {
 	      if (index == -1) {
 	        System.out.println("we couldnt find " + name + ". try again. ");
 	      } else {
+
 	        switch (str) {
 	          case "edit":
 	            System.out.println("\n* " + name + " is being edited *");
-	            contacts = editContact(contacts, index);
+	            contacts = editContact(contacts, name, index);
 	            break;
+
 	          case "delete":
 	            contacts = deleteContact(contacts, index);
 	            System.out.println("contact " + name + " has been deleted.");
 	            break;
+
 	          case "show":
 	            showDetails(contacts, index);
 	            break;
@@ -114,9 +119,15 @@ public class Contacts {
 	  }
 
 	  void showDetails(ArrayList<Contacts> c, short i) {
-	    System.out.println("Contact Details ");
+	    System.out.println("\nContact Details: ");
 	    System.out.print("Name: " + c.get(i).fName + " " + c.get(i).lName + "\nAddress: " + c.get(i).address + "\nCity: "
 	      + c.get(i).city + "\t\tState: " + c.get(i).state + "\t\tZip: " + c.get(i).zip + "\nEmail: " + c.get(i).email
 	      + "\t\tPhone number: " + c.get(i).phNum + "\n");
+	  }
+
+	  @Override
+	  public boolean equals(Object c) {
+	    Contacts con = (Contacts) c;
+	    return this.fName.equalsIgnoreCase(con.fName);
 	  }
 }
