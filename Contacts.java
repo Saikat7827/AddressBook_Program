@@ -104,6 +104,7 @@ public class Contacts {
 	          case "show":
 	            showDetails(contacts, index);
 	            break;
+
 	        }
 	      }
 
