@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Contacts {
-	 String fName, lName, address, city, state, email;
+	String fName, lName, address, city, state, email;
 	  int zip;
 	  long phNum;
 
@@ -129,5 +129,5 @@ public class Contacts {
 	  public boolean equals(Object c) {
 	    Contacts con = (Contacts) c;
 	    return this.fName.equalsIgnoreCase(con.fName);
-	  }
+	  }	
 }
